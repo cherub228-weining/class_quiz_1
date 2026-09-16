@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ECON20004 · Tutorial 1: Probability Revision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EFF2F7; --panel:#FFFFFF; --panel-2:#F7F9FC;
+  --ink:#152444; --muted:#5B6B8C; --line:#D8DFEB;
+  --ultra:#2B44D6; --ultra-soft:#E6EAFC;
+  --pink:#D62C74; --pink-soft:#FCE7F0;
+  --good:#0B7A57; --good-soft:#E0F5EC;
+  --amber:#9A6200; --amber-soft:#FBF0DC;
+  --focus:#2B44D6;
+  --shadow:0 1px 2px rgba(21,36,68,.06), 0 8px 24px -12px rgba(21,36,68,.25);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0D1324; --panel:#161E36; --panel-2:#1B2440;
+    --ink:#E8ECF7; --muted:#97A5C4; --line:#2A3555;
+    --ultra:#8E9CFF; --ultra-soft:#232E5C;
+    --pink:#FF77AC; --pink-soft:#3C1E33;
+    --good:#4FD3A4; --good-soft:#123A30;
+    --amber:#E4AC58; --amber-soft:#3A2D14;
+    --focus:#8E9CFF;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0D1324; --panel:#161E36; --panel-2:#1B2440;
+  --ink:#E8ECF7; --muted:#97A5C4; --line:#2A3555;
+  --ultra:#8E9CFF; --ultra-soft:#232E5C;
+  --pink:#FF77AC; --pink-soft:#3C1E33;
+  --good:#4FD3A4; --good-soft:#123A30;
+  --amber:#E4AC58; --amber-soft:#3A2D14;
+  --focus:#8E9CFF;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:Archivo,"Helvetica Neue",Arial,sans-serif;
+  font-size:17px; line-height:1.55;
+  -webkit-text-size-adjust:100%;
+}
+img{max-width:100%}
+:focus-visible{outline:2.5px solid var(--focus); outline-offset:2px; border-radius:4px}
+
+/* ---------- maths typesetting ---------- */
+.m{font-family:Newsreader,Georgia,"Times New Roman",serif; font-size:1.06em; white-space:normal}
+.m i{font-style:italic}
+.m sub{font-size:.68em}
+.m sup{font-size:.68em}
+.sq{white-space:nowrap}
+.rt{border-top:1.4px solid currentColor; padding:.06em .12em 0 .1em; margin-left:-.08em}
+.frac{display:inline-flex; flex-direction:column; align-items:center; vertical-align:-.55em; margin:0 .18em}
+.frac>span:first-child{padding:0 .3em .05em; border-bottom:1.4px solid currentColor}
+.frac>span:last-child{padding:.05em .3em 0}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:sticky; top:0; z-index:20; background:var(--panel);
+  border-bottom:1px solid var(--line);
+}
+.topbar-in{
+  max-width:1060px; margin:0 auto; padding:10px 18px;
+  display:flex; align-items:center; gap:14px;
+}
+.brand{font-weight:700; font-size:15px; letter-spacing:-.01em; margin-right:auto; cursor:pointer;
+  background:none;border:0;color:inherit;font-family:inherit;padding:6px 8px;margin-left:-8px;border-radius:6px}
+.brand:hover{background:var(--panel-2)}
+.brand span{color:var(--muted); font-weight:500}
+.xp-pill{
+  font-weight:700; font-size:14px; color:var(--ultra);
+  background:var(--ultra-soft); padding:5px 11px; border-radius:99px;
+  font-variant-numeric:tabular-nums;
+}
+.icon-btn{
+  background:none; border:1px solid var(--line); color:var(--muted);
+  width:34px; height:34px; border-radius:8px; cursor:pointer; font-size:15px;
+  display:grid; place-items:center; font-family:inherit;
+}
+.icon-btn:hover{color:var(--ink); border-color:var(--ink)}
+.bar{height:3px; background:var(--line)}
+.bar>div{height:100%; background:var(--ultra); width:0%; transition:width .4s ease}
+
+main{max-width:1060px; margin:0 auto; padding:0 18px 80px}
+
+/* ---------- hero ---------- */
+.hero{display:grid; grid-template-columns:1.1fr .9fr; gap:48px; align-items:center; padding:64px 0 48px}
+.kicker{color:var(--ultra); font-weight:600; font-size:14px; margin:0 0 14px}
+h1{
+  font-size:clamp(34px,5.2vw,54px); line-height:1.04; letter-spacing:-.03em;
+  font-weight:700; margin:0 0 18px;
+}
+.lede{font-size:18px; color:var(--muted); margin:0 0 28px; max-width:46ch}
+.hero-cta{display:flex; gap:10px; flex-wrap:wrap}
+
+.btn{
+  font-family:inherit; font-size:16px; font-weight:600; cursor:pointer;
+  padding:12px 22px; border-radius:10px; border:1px solid transparent;
+  background:var(--ultra); color:#fff; transition:transform .08s ease;
+}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{opacity:.45; cursor:not-allowed}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--ink)}
+.btn.small{font-size:14px; padding:9px 16px}
+
+.plot{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px; box-shadow:var(--shadow)}
+.plot svg{display:block; width:100%; height:auto}
+.plot-cap{display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:8px}
+.plot-cap b{font-size:14px; font-weight:600}
+.plot-cap .val{font-family:Newsreader,serif; font-size:19px; font-variant-numeric:tabular-nums}
+input[type=range]{width:100%; accent-color:var(--ultra); margin:10px 0 2px}
+.rng-note{font-size:13px; color:var(--muted); margin:0}
+
+/* ---------- stage list ---------- */
+.sect-head{display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin:0 0 6px}
+h2{font-size:24px; letter-spacing:-.02em; margin:0; font-weight:700}
+.sect-sub{color:var(--muted); font-size:15px; margin:0 0 20px}
+
+.stage-row{
+  display:grid; grid-template-columns:44px 1fr auto; gap:18px; align-items:center;
+  width:100%; text-align:left; font-family:inherit; color:inherit; cursor:pointer;
+  background:var(--panel); border:1px solid var(--line); border-radius:12px;
+  padding:16px 18px; margin-bottom:10px;
+}
+.stage-row:hover{border-color:var(--ultra)}
+.stage-row .num{
+  font-family:Newsreader,serif; font-size:26px; color:var(--muted);
+  text-align:center; font-variant-numeric:tabular-nums;
+}
+.stage-row.done .num{color:var(--good)}
+.stage-row h3{margin:0 0 3px; font-size:17px; font-weight:600; letter-spacing:-.01em}
+.stage-row p{margin:0; font-size:14px; color:var(--muted)}
+.stars{font-size:15px; letter-spacing:2px; color:var(--amber); white-space:nowrap}
+.stars .off{color:var(--line)}
+
+/* ---------- panels ---------- */
+.card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:26px; box-shadow:var(--shadow)}
+.brief{
+  background:var(--panel-2); border-left:3px solid var(--ultra);
+  border-radius:0 10px 10px 0; padding:16px 18px; margin:0 0 24px;
+  font-size:15.5px; color:var(--ink);
+}
+.brief b{display:block; font-size:13px; color:var(--muted); font-weight:600; margin-bottom:5px}
+
+.play-head{display:flex; align-items:center; gap:14px; margin:28px 0 18px; flex-wrap:wrap}
+.play-head h2{font-size:20px}
+.dots{display:flex; gap:6px; margin-left:auto}
+.dot{width:9px; height:9px; border-radius:99px; background:var(--line)}
+.dot.now{background:var(--ultra); transform:scale(1.35)}
+.dot.ok{background:var(--good)}
+.dot.no{background:var(--pink)}
+
+.q-prompt{font-size:19px; line-height:1.5; margin:0 0 22px}
+.opts{display:flex; flex-direction:column; gap:9px; margin-bottom:20px}
+.opt{
+  font-family:inherit; font-size:16.5px; text-align:left; color:inherit; cursor:pointer;
+  background:var(--panel); border:1.5px solid var(--line); border-radius:10px;
+  padding:14px 16px; display:flex; gap:12px; align-items:flex-start;
+}
+.opt:hover:not(:disabled){border-color:var(--ultra)}
+.opt:disabled{cursor:default}
+.opt .key{
+  flex:none; width:23px; height:23px; border-radius:6px; background:var(--panel-2);
+  color:var(--muted); font-size:13px; font-weight:600; display:grid; place-items:center; margin-top:2px;
+}
+.opt.picked{border-color:var(--ultra); background:var(--ultra-soft)}
+.opt.right{border-color:var(--good); background:var(--good-soft)}
+.opt.right .key{background:var(--good); color:#fff}
+.opt.wrong{border-color:var(--pink); background:var(--pink-soft)}
+.opt.wrong .key{background:var(--pink); color:#fff}
+
+.num-row{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:20px}
+input[type=text]{
+  font-family:Newsreader,serif; font-size:21px; padding:11px 14px; width:220px;
+  border:1.5px solid var(--line); border-radius:10px; background:var(--panel); color:var(--ink);
+}
+input[type=text]:focus{border-color:var(--ultra); outline:none}
+input[type=text].right{border-color:var(--good); background:var(--good-soft)}
+input[type=text].wrong{border-color:var(--pink); background:var(--pink-soft)}
+.unit{color:var(--muted); font-size:14px}
+
+/* proof builder */
+.proof-slots{
+  border:1.5px dashed var(--line); border-radius:10px; padding:10px; min-height:64px;
+  display:flex; flex-direction:column; gap:7px; margin-bottom:14px; background:var(--panel-2);
+}
+.proof-slots.empty::after{content:"Tap the lines below in order to build the proof."; color:var(--muted); font-size:14.5px; padding:8px 6px}
+.pool{display:flex; flex-direction:column; gap:7px; margin-bottom:20px}
+.step{
+  font-family:inherit; text-align:left; color:inherit; cursor:pointer; width:100%;
+  background:var(--panel); border:1.5px solid var(--line); border-radius:9px;
+  padding:11px 14px; display:flex; gap:11px; align-items:baseline; font-size:16px;
+}
+.step:hover:not(:disabled){border-color:var(--ultra)}
+.step:disabled{cursor:default}
+.step .n{flex:none; color:var(--muted); font-size:13px; font-weight:600; min-width:14px}
+.step.right{border-color:var(--good); background:var(--good-soft)}
+.step.wrong{border-color:var(--pink); background:var(--pink-soft)}
+
+.actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+.hint-btn{background:none; border:0; color:var(--amber); font-family:inherit; font-size:14.5px;
+  font-weight:600; cursor:pointer; padding:8px 4px; text-decoration:underline; text-underline-offset:3px}
+.hint-box{background:var(--amber-soft); border-radius:10px; padding:13px 16px; margin:0 0 18px; font-size:15.5px}
+
+.fb{border-radius:10px; padding:16px 18px; margin:20px 0 0; font-size:16px}
+.fb.ok{background:var(--good-soft)}
+.fb.no{background:var(--pink-soft)}
+.fb b{display:block; margin-bottom:5px; font-size:15px}
+.fb .xp{float:right; font-weight:700; font-variant-numeric:tabular-nums}
+
+/* results */
+.grid-stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:24px 0}
+.stat{background:var(--panel-2); border-radius:12px; padding:16px 18px}
+.stat b{display:block; font-family:Newsreader,serif; font-size:34px; line-height:1.1; font-variant-numeric:tabular-nums}
+.stat span{font-size:13.5px; color:var(--muted)}
+.brk{display:flex; align-items:center; gap:12px; padding:11px 0; border-bottom:1px solid var(--line); font-size:15px}
+.brk:last-child{border-bottom:0}
+.brk .t{flex:1; min-width:0}
+.brk .meter{flex:none; width:120px; height:7px; background:var(--line); border-radius:99px; overflow:hidden}
+.brk .meter>div{height:100%; background:var(--ultra)}
+.brk .pc{flex:none; width:44px; text-align:right; font-variant-numeric:tabular-nums; color:var(--muted); font-size:14px}
+textarea{
+  width:100%; min-height:120px; font-family:inherit; font-size:14px; padding:13px;
+  border:1px solid var(--line); border-radius:10px; background:var(--panel-2); color:var(--ink); resize:vertical;
+}
+.sol{margin:0 0 10px; border:1px solid var(--line); border-radius:10px; background:var(--panel); overflow:hidden}
+.sol summary{cursor:pointer; padding:14px 18px; font-weight:600; font-size:16px}
+.sol .body{padding:0 18px 18px; font-size:15.5px; color:var(--muted)}
+.sol .body .m{color:var(--ink)}
+.toast{position:fixed; left:50%; bottom:26px; transform:translateX(-50%); background:var(--ink); color:var(--paper);
+  padding:11px 20px; border-radius:99px; font-size:14.5px; font-weight:600; z-index:50}
+footer{max-width:1060px; margin:0 auto; padding:30px 18px 50px; color:var(--muted); font-size:13.5px; border-top:1px solid var(--line)}
+
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr; gap:30px; padding:34px 0 30px}
+  .card{padding:20px 17px}
+  body{font-size:16px}
+  .q-prompt{font-size:18px}
+  main{padding:0 14px 60px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important}}
+@media print{
+  .topbar,.actions,footer,.hero-cta{display:none}
+  body{background:#fff}
+  .sol .body{display:block !important}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <button class="brand" id="home-link">ECON20004 <span>· Tutorial 1</span></button>
+    <div class="xp-pill" id="xp-pill">0 XP</div>
+    <button class="icon-btn" id="theme-btn" title="Switch light / dark" aria-label="Switch light or dark theme">◐</button>
+    <button class="icon-btn" id="reset-btn" title="Clear my progress" aria-label="Clear my progress">↺</button>
+  </div>
+  <div class="bar"><div id="bar-fill"></div></div>
+</div>
+
+<main id="app"></main>
+
+<footer>
+  Probability revision for ECON20004, Tutorial 1. Answers are checked in your browser and your progress is stored on
+  this device only — nothing is sent anywhere.
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================ maths helpers ============================ */
+var X='<i>X</i>', Y='<i>Y</i>', A='<i>a</i>', B='<i>b</i>', U='<i>u</i>', W='<i>w</i>';
+var EX='E('+X+')', EY='E('+Y+')', VX='V('+X+')', VY='V('+Y+')', VU='V('+U+')';
+function m(s){ return '<span class="m">'+s+'</span>'; }
+function sq(s){ return '<span class="sq">&radic;<span class="rt">'+s+'</span></span>'; }
+function frac(a,b){ return '<span class="frac"><span>'+a+'</span><span>'+b+'</span></span>'; }
+
+/* ============================ content ============================ */
+var STAGES = [
+{
+  title:"Expectation of a linear transform",
+  sub:"Exercise 1",
+  brief:"Show that if "+m(Y+' = '+A+' + '+B+X)+", then "+m(EY+' = '+A+' + '+B+EX)+".",
+  qs:[
+  { t:"order",
+    p:"Put the proof in order. Take "+m(X)+" to be discrete with probability function "+m('f('+X.toLowerCase()+')')+".",
+    steps:[
+      m(EY+' = E('+A+' + '+B+X+')'),
+      m('= &Sigma;<sub>x</sub> ('+A+' + '+B+'<i>x</i>) f(<i>x</i>)'),
+      m('= '+A+' &Sigma;<sub>x</sub> f(<i>x</i>) + '+B+' &Sigma;<sub>x</sub> <i>x</i> f(<i>x</i>)'),
+      m('= '+A+' &middot; 1 + '+B+EX),
+      m('= '+A+' + '+B+EX)
+    ],
+    hint:"Start from the definition of an expectation as a probability-weighted sum, then split it into two separate sums.",
+    why:"An expectation is a probability-weighted sum, so write it out, split it, and recognise the two pieces: "+m('&Sigma; f(<i>x</i>) = 1')+" and "+m('&Sigma; <i>x</i> f(<i>x</i>) = '+EX)+". The continuous case is identical with an integral in place of the sum."
+  },
+  { t:"mc",
+    p:"Which fact turns "+m(A+' &Sigma;<sub>x</sub> f(<i>x</i>)')+" into just "+m(A)+"?",
+    opts:["The probabilities of all possible values of "+m(X)+" sum to one",
+          "Constants can always be dropped from an expectation",
+          m(X)+" must have mean zero",
+          "The sum has "+m('<i>n</i>')+" terms, so it equals "+m('<i>n</i>'+A)],
+    a:0,
+    hint:"Look at what you are summing. It has nothing to do with "+m(X)+" itself.",
+    why:m('&Sigma;<sub>x</sub> f(<i>x</i>) = 1')+" — that is what makes "+m('f')+" a probability function. So the first term collapses to "+m(A)+" no matter what "+m(X)+" looks like."
+  },
+  { t:"num",
+    p:"A household's monthly spending "+m(X)+" has "+m(EX+' = 1,240')+". Expenditure after a flat charge and a discount is "+m(Y+' = 150 + 0.8'+X)+". What is "+m(EY)+"?",
+    a:1142, unit:"£",
+    hint:"Apply the rule directly: "+m(EY+' = '+A+' + '+B+EX)+".",
+    why:m(EY+' = 150 + 0.8 &times; 1,240 = 150 + 992 = 1,142')+". Notice you never needed the distribution of "+m(X)+", only its mean."
+  }]
+},
+{
+  title:"Variance of a linear transform",
+  sub:"Exercise 2",
+  brief:"What is the variance of "+m(Y)+" if "+m(Y+' = '+A+' + '+B+X)+"?",
+  qs:[
+  { t:"order",
+    p:"Build the derivation of "+m(VY)+".",
+    steps:[
+      m(VY+' = E[('+Y+' &minus; '+EY+')<sup>2</sup>]'),
+      m('= E[('+A+' + '+B+X+' &minus; ('+A+' + '+B+EX+'))<sup>2</sup>]'),
+      m('= E[('+B+'('+X+' &minus; '+EX+'))<sup>2</sup>]'),
+      m('= '+B+'<sup>2</sup> E[('+X+' &minus; '+EX+')<sup>2</sup>]'),
+      m('= '+B+'<sup>2</sup> '+VX)
+    ],
+    hint:"Substitute both "+m(Y)+" and "+m(EY)+" into the definition, then watch "+m(A)+" cancel.",
+    why:"Because "+m(EY+' = '+A+' + '+B+EX)+", the constant "+m(A)+" appears in both terms and cancels. Factoring out "+m(B)+" and squaring gives "+m(VY+' = '+B+'<sup>2</sup>'+VX)+"."
+  },
+  { t:"mc",
+    p:"Why does "+m(A)+" not appear in the answer?",
+    opts:["Adding a constant shifts every value and the mean by the same amount, so deviations from the mean are unchanged",
+          "Because "+m(A)+" is assumed to be small relative to "+m(B),
+          "Because "+m('V('+A+') = '+A),
+          "Because "+m(A)+" and "+m(X)+" are independent"],
+    a:0,
+    hint:"Variance measures spread around the mean, not location.",
+    why:"Variance is about spread. Sliding the whole distribution along by "+m(A)+" moves the mean by "+m(A)+" too, so every deviation "+m(X+' &minus; '+EX)+" is untouched. Only the scaling by "+m(B)+" matters."
+  },
+  { t:"num",
+    p:"If "+m(VX+' = 4')+" and "+m(Y+' = 7 &minus; 3'+X)+", what is "+m(VY)+"?",
+    a:36,
+    hint:m(VY+' = '+B+'<sup>2</sup>'+VX)+", and here "+m(B+' = &minus;3')+".",
+    why:m('(&minus;3)<sup>2</sup> &times; 4 = 9 &times; 4 = 36')+". The minus sign disappears because "+m(B)+" enters squared — variance can never be negative."
+  },
+  { t:"mc",
+    p:"What is the standard deviation of "+m(Y)+", writing "+m('&sigma;<sub>X</sub>')+" for the standard deviation of "+m(X)+"?",
+    opts:[m('|'+B+'| &sigma;<sub>X</sub>'), m(B+' &sigma;<sub>X</sub>'), m(B+'<sup>2</sup> &sigma;<sub>X</sub>'), m('&sigma;<sub>X</sub>')],
+    a:0,
+    hint:"Take the square root of "+m(B+'<sup>2</sup>'+VX)+" and remember a standard deviation cannot be negative.",
+    why:m(sq(B+'<sup>2</sup>'+VX)+' = |'+B+'| &sigma;<sub>X</sub>')+". The absolute value matters: "+m(sq(B+'<sup>2</sup>'))+" is "+m('|'+B+'|')+", not "+m(B)+"."
+  }]
+},
+{
+  title:"Independence implies zero covariance",
+  sub:"Exercise 3",
+  brief:"Show that if two random variables (discrete or continuous) are independent, then their covariance is zero.",
+  qs:[
+  { t:"order",
+    p:"Assemble the argument.",
+    steps:[
+      m('Cov('+X+','+Y+') = E[('+X+' &minus; '+EX+')('+Y+' &minus; '+EY+')]'),
+      m('= E('+X+Y+') &minus; '+EX+EY),
+      "Independence gives "+m('E('+X+Y+') = '+EX+EY),
+      m('= '+EX+EY+' &minus; '+EX+EY),
+      m('= 0')
+    ],
+    hint:"Expand the product inside the expectation before you use independence.",
+    why:"Expanding gives "+m('Cov('+X+','+Y+') = E('+X+Y+') &minus; '+EX+EY)+". Independence means the joint density factorises, which makes the expectation of the product equal to the product of the expectations — so the two terms cancel."
+  },
+  { t:"mc",
+    p:"Which statement is correct?",
+    opts:["Independence implies zero covariance, but zero covariance does not imply independence",
+          "Zero covariance implies independence, but not the other way round",
+          "Each implies the other",
+          "Neither implication holds in general"],
+    a:0,
+    hint:"You have just proved one direction. Is the converse also something you can prove?",
+    why:"Covariance only detects <i>linear</i> association. Two variables can be tightly related in a non-linear way and still have zero covariance — the next exercise builds exactly such a case."
+  },
+  { t:"mc",
+    p:"What is "+m('Cov('+X+','+X+')')+"?",
+    opts:[m(VX), m('0'), m('1'), m(EX+'<sup>2</sup>')],
+    a:0,
+    hint:"Put "+m(Y+' = '+X)+" into the definition of covariance.",
+    why:m('Cov('+X+','+X+') = E[('+X+' &minus; '+EX+')<sup>2</sup>] = '+VX)+". Variance is just covariance with itself — useful in the next exercise."
+  }]
+},
+{
+  title:"Zero covariance without independence",
+  sub:"Exercise 4",
+  brief:m(X)+" and "+m(Y)+" can each take the values "+m('&minus;1, 0, 1')+", but the pair "+m('('+X+','+Y+')')+" only ever takes the values "+m('(1,&thinsp;0)')+", "+m('(0,&thinsp;1)')+", "+m('(&minus;1,&thinsp;0)')+" and "+m('(0,&thinsp;&minus;1)')+", each with probability "+m('&frac14;')+".",
+  widget:"grid",
+  qs:[
+  { t:"num", p:"What is "+m(EX)+"?", a:0,
+    hint:"Average the four "+m(X)+" values, each weighted by "+m('&frac14;')+".",
+    why:m('&frac14;(1) + &frac14;(0) + &frac14;(&minus;1) + &frac14;(0) = 0')+". By symmetry "+m(EY+' = 0')+" too."
+  },
+  { t:"num", p:"What is "+m('E('+X+Y+')')+"?", a:0,
+    hint:"Work out the product "+m(X+Y)+" at each of the four possible outcomes before averaging.",
+    why:"At every one of the four outcomes at least one of the two variables is zero, so the product "+m(X+Y)+" is zero every time. Its average is therefore zero."
+  },
+  { t:"num", p:"What is "+m('Cov('+X+','+Y+')')+"?", a:0,
+    hint:"Use "+m('Cov = E('+X+Y+') &minus; '+EX+EY)+" with the two answers you already have.",
+    why:m('0 &minus; (0)(0) = 0')+". The covariance is exactly zero."
+  },
+  { t:"num", p:"What is "+m('P('+X+' = 1 and '+Y+' = 0)')+"?", a:0.25,
+    hint:"That is one of the four listed outcomes. Decimals or fractions both work.",
+    why:"It is the outcome "+m('(1,&thinsp;0)')+", one of four equally likely pairs, so the probability is "+m('&frac14; = 0.25')+"."
+  },
+  { t:"num", p:"Now the product of the separate probabilities: what is "+m('P('+X+' = 1) &times; P('+Y+' = 0)')+"?", a:0.125,
+    hint:m('Y')+" equals 0 at two of the four outcomes — "+m('(1,&thinsp;0)')+" and "+m('(&minus;1,&thinsp;0)')+".",
+    why:m('P('+X+' = 1) = &frac14;')+" and "+m('P('+Y+' = 0) = &frac12;')+", so the product is "+m('&#8539; = 0.125')+" — which is <i>not</i> the joint probability of 0.25 you found above."
+  },
+  { t:"mc",
+    p:"So are "+m(X)+" and "+m(Y)+" independent?",
+    opts:["No — the joint probability does not equal the product of the marginals, and knowing "+m(X+' = 1')+" forces "+m(Y+' = 0'),
+          "Yes, because their covariance is zero",
+          "Yes, because both are symmetric about zero",
+          "It cannot be determined from the information given"],
+    a:0,
+    hint:"Compare the two probabilities you just calculated.",
+    why:"Independence requires "+m('P('+X+' = <i>x</i>, '+Y+' = <i>y</i>) = P('+X+' = <i>x</i>) P('+Y+' = <i>y</i>)')+" for every pair of values, and here "+m('0.25 &ne; 0.125')+". Intuitively the variables are strongly dependent: learning that one is non-zero tells you the other must be zero. This is the standard counterexample showing zero covariance does not mean independence."
+  }]
+},
+{
+  title:"Correlation",
+  sub:"Exercise 5",
+  brief:"With "+m('Corr('+X+','+Y+') = '+frac('Cov('+X+','+Y+')', sq(VX)+' '+sq(VY)))+", look first at "+m(Y+' = '+A+' + '+B+X)+", then at "+m(Y+' = '+A+' + '+B+X+' + '+U)+" where "+m(U)+" has mean zero and is independent of "+m(X)+".",
+  qs:[
+  { t:"mc", p:"For "+m(Y+' = '+A+' + '+B+X)+" with "+m(B+' &gt; 0')+", the correlation between "+m(X)+" and "+m(Y)+" is:",
+    opts:[m('+1'), m('0'), m('&minus;1'), m(B)],
+    a:0,
+    hint:"Use "+m('Cov('+X+','+Y+') = '+B+VX)+" and "+m(VY+' = '+B+'<sup>2</sup>'+VX)+" in the definition.",
+    why:m(frac(B+VX, sq(VX)+' |'+B+'|'+sq(VX))+' = '+frac(B,'|'+B+'|'))+", which is "+m('+1')+" when "+m(B+' &gt; 0')+". The points lie exactly on a line, so the correlation is perfect."
+  },
+  { t:"mc", p:"And when "+m(B+' &lt; 0')+"?",
+    opts:[m('&minus;1'), m('+1'), m('0'), "It depends on "+m(VX)],
+    a:0,
+    hint:m(frac(B,'|'+B+'|'))+" takes only two possible values.",
+    why:"Same algebra: "+m(frac(B,'|'+B+'|')+' = &minus;1')+" when "+m(B)+" is negative. Still a perfect straight line, just downward sloping."
+  },
+  { t:"mc", p:"And when "+m(B+' = 0')+"?",
+    opts:["Undefined — "+m(VY+' = 0')+", so the denominator is zero",
+          m('0')+", since the covariance is zero",
+          m('+1'), m('&minus;1')],
+    a:0,
+    hint:"Check the denominator of the definition before computing anything.",
+    why:"If "+m(B+' = 0')+" then "+m(Y+' = '+A)+" is a constant, so "+m(VY+' = 0')+" and the formula divides by zero. Correlation is not defined for a degenerate variable — writing zero would wrongly suggest 'no linear relationship' when in fact there is no variation at all."
+  },
+  { t:"mc", p:"Now "+m(Y+' = '+A+' + '+B+X+' + '+U)+" with "+m('E('+U+') = 0')+". What is "+m(EY)+"?",
+    opts:[m(A+' + '+B+EX), m(A+' + '+B+EX+' + E('+U+')'), m(B+EX), m(A+' + '+EX)],
+    a:0,
+    hint:"Take expectations term by term, and use "+m('E('+U+') = 0')+".",
+    why:"Expectation is linear, so "+m(EY+' = '+A+' + '+B+EX+' + E('+U+')')+", and the last term is zero by assumption."
+  },
+  { t:"mc", p:"What is "+m(VY)+"?",
+    opts:[m(B+'<sup>2</sup>'+VX+' + '+VU), m(B+'<sup>2</sup>'+VX), m(B+VX+' + '+VU), m(B+'<sup>2</sup>('+VX+' + '+VU+')')],
+    a:0,
+    hint:"The variance of a sum picks up a covariance term — but what is "+m('Cov('+X+','+U+')')+" here?",
+    why:m(VY+' = '+B+'<sup>2</sup>'+VX+' + '+VU+' + 2'+B+' Cov('+X+','+U+')')+", and independence makes that last covariance zero. So the two sources of variation simply add up."
+  },
+  { t:"order",
+    p:"Show that "+m('Cov('+X+','+Y+') = '+B+VX)+".",
+    steps:[
+      m('Cov('+X+','+Y+') = Cov('+X+', '+A+' + '+B+X+' + '+U+')'),
+      m('= Cov('+X+','+A+') + '+B+' Cov('+X+','+X+') + Cov('+X+','+U+')'),
+      m('Cov('+X+','+A+') = 0')+" and "+m('Cov('+X+','+U+') = 0')+" since "+m(U)+" and "+m(X)+" are independent",
+      m('= '+B+VX)
+    ],
+    hint:"Covariance is linear in each argument, and "+m('Cov('+X+','+X+') = '+VX)+".",
+    why:"Only the "+m(X)+" term survives: a constant has zero covariance with anything, and independence kills the "+m(U)+" term. That leaves "+m(B+' Cov('+X+','+X+') = '+B+VX)+"."
+  },
+  { t:"mc", p:"Putting those together, "+m('Corr('+X+','+Y+')')+" equals:",
+    opts:[m(frac(B+sq(VX), sq(B+'<sup>2</sup>'+VX+' + '+VU))),
+          m(frac(B+VX, sq(B+'<sup>2</sup>'+VX+' + '+VU))),
+          m(frac(B, sq(VX+' + '+VU))),
+          m(B)],
+    a:0,
+    hint:"Divide "+m(B+VX)+" by "+m(sq(VX))+" and by "+m(sq(VY))+", then simplify "+m(frac(VX, sq(VX)))+".",
+    why:m(frac('Cov', sq(VX)+sq(VY))+' = '+frac(B+VX, sq(VX)+sq(B+'<sup>2</sup>'+VX+' + '+VU)))+", and "+m(frac(VX,sq(VX))+' = '+sq(VX))+", giving the first expression."
+  },
+  { t:"mc", widget:"noise",
+    p:"Drag the slider to raise "+m(VU)+". What happens to the correlation between "+m(X)+" and "+m(Y)+" as the variance of "+m(U)+" grows?",
+    opts:["Its magnitude shrinks towards zero",
+          "It grows towards "+m('&plusmn;1'),
+          "It stays the same, because "+m(U)+" is independent of "+m(X),
+          "It changes sign"],
+    a:0,
+    hint:"Look at where "+m(VU)+" sits in the formula, and let it get very large.",
+    why:m(VU)+" appears only in the denominator, so as it grows the whole ratio tends to zero. Economically: "+m(Y)+" still responds to "+m(X)+" with the same slope "+m(B)+", but that signal is buried under more and more noise, so the two variables look less and less associated. The slope and the correlation are telling you different things."
+  }]
+},
+{
+  title:"Averaging over groups",
+  sub:"Exercise 6",
+  brief:"For UK earnings "+m(W+'<sub>i</sub>')+": "+m('E('+W+'<sub>i</sub> | female) = 34,000')+" and "+m('E('+W+'<sub>i</sub> | male) = 40,000')+". The male share of the population is "+m('<i>p</i>')+". Find "+m('E('+W+'<sub>i</sub>)')+".",
+  qs:[
+  { t:"mc", p:"Which expression gives the population mean?",
+    opts:[m('<i>p</i> E('+W+'<sub>i</sub>|male) + (1 &minus; <i>p</i>) E('+W+'<sub>i</sub>|female)'),
+          m('E('+W+'<sub>i</sub>|male) + E('+W+'<sub>i</sub>|female)'),
+          m('<i>p</i> [E('+W+'<sub>i</sub>|male) + E('+W+'<sub>i</sub>|female)]'),
+          m('<i>p</i> E('+W+'<sub>i</sub>|male) + <i>p</i> E('+W+'<sub>i</sub>|female)')],
+    a:0,
+    hint:"The overall mean is a weighted average of the group means, with weights equal to the group shares.",
+    why:"This is the law of iterated expectations: "+m('E('+W+'<sub>i</sub>) = E[E('+W+'<sub>i</sub>|gender)]')+". Average the group means using the population shares, which must sum to one."
+  },
+  { t:"num", p:"With "+m('<i>p</i> = 0.5')+", what is "+m('E('+W+'<sub>i</sub>)')+"?", a:37000, unit:"£",
+    hint:"Two equal weights, so this is an ordinary average of the two group means.",
+    why:m('0.5 &times; 40,000 + 0.5 &times; 34,000 = 20,000 + 17,000 = 37,000')+". With equal shares it is simply the midpoint of the two group means."
+  },
+  { t:"num", p:"Bonus: if instead "+m('<i>p</i> = 0.6')+", what is "+m('E('+W+'<sub>i</sub>)')+"?", a:37600, unit:"£",
+    hint:"Re-weight: 0.6 on the male mean, 0.4 on the female mean.",
+    why:m('0.6 &times; 40,000 + 0.4 &times; 34,000 = 24,000 + 13,600 = 37,600')+". Shifting weight towards the higher-earning group pulls the overall mean up — the group means have not changed at all."
+  }]
+}
+];
+
+/* ============================ state ============================ */
+var KEY='econ20004-t1-v1';
+var FIRST=100, RETRY=40, HINT_COST=25, STREAK_MAX=5, STREAK_UNIT=10;
+
+var S = { res:{}, streak:0, started:null, seen:0 };
+function qid(si,qi){ return si+'.'+qi; }
+function totalQs(){ var n=0; for(var i=0;i<STAGES.length;i++) n+=STAGES[i].qs.length; return n; }
+function load(){
+  try{ var raw=localStorage.getItem(KEY); if(raw){ var o=JSON.parse(raw); if(o&&o.res){ S.res=o.res; S.started=o.started||null; } } }
+  catch(e){}
+}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify({res:S.res, started:S.started})); }catch(e){}
+}
+function totalXP(){ var t=0; for(var k in S.res) t+=S.res[k].xp||0; return t; }
+function answeredCount(){ var n=0; for(var k in S.res) if(S.res[k].done) n++; return n; }
+function stageStat(si){
+  var st=STAGES[si], done=0, right=0, first=0, xp=0;
+  for(var i=0;i<st.qs.length;i++){
+    var r=S.res[qid(si,i)];
+    if(r&&r.done){ done++; xp+=r.xp||0; if(r.correct) right++; if(r.firstTry) first++; }
+  }
+  return {done:done, right:right, first:first, xp:xp, n:st.qs.length, complete:done===st.qs.length};
+}
+function stageStars(si){
+  var s=stageStat(si); if(!s.complete) return 0;
+  var max=s.n*FIRST, ratio=s.xp/max;
+  return ratio>=0.85?3:(ratio>=0.6?2:1);
+}
+function allComplete(){ for(var i=0;i<STAGES.length;i++) if(!stageStat(i).complete) return false; return true; }
+
+/* ============================ scatter plot ============================ */
+function mulberry(seed){ var t=seed>>>0; return function(){ t=(t+0x6D2B79F5)>>>0; var r=Math.imul(t^(t>>>15),1|t); r=(r+Math.imul(r^(r>>>7),61|r))^r; return ((r^(r>>>14))>>>0)/4294967296; }; }
+var CLOUD=(function(){ var rnd=mulberry(20004), out=[]; for(var i=0;i<130;i++){ var u=Math.max(rnd(),1e-9), v=rnd(), R=Math.sqrt(-2*Math.log(u)); out.push([R*Math.cos(2*Math.PI*v), R*Math.sin(2*Math.PI*v)]); } return out; })();
+
+function cloudSVG(rho){
+  var Wd=320, Ht=250, pad=26, lim=3.1;
+  function px(z){ return pad+(z+lim)/(2*lim)*(Wd-2*pad); }
+  function py(z){ return Ht-pad-(z+lim)/(2*lim)*(Ht-2*pad); }
+  var k=Math.sqrt(Math.max(0,1-rho*rho));
+  var col = rho<-0.02 ? 'var(--pink)' : 'var(--ultra)';
+  var s='<svg viewBox="0 0 '+Wd+' '+Ht+'" role="img" aria-label="Scatter plot of X against Y with correlation '+rho.toFixed(2)+'">';
+  s+='<line x1="'+pad+'" y1="'+(Ht-pad)+'" x2="'+(Wd-pad)+'" y2="'+(Ht-pad)+'" stroke="var(--line)" stroke-width="1.5"/>';
+  s+='<line x1="'+pad+'" y1="'+pad+'" x2="'+pad+'" y2="'+(Ht-pad)+'" stroke="var(--line)" stroke-width="1.5"/>';
+  for(var i=0;i<CLOUD.length;i++){
+    var z1=CLOUD[i][0], z2=CLOUD[i][1], y=rho*z1+k*z2;
+    if(Math.abs(z1)>lim||Math.abs(y)>lim) continue;
+    s+='<circle cx="'+px(z1).toFixed(1)+'" cy="'+py(y).toFixed(1)+'" r="3.1" fill="'+col+'" fill-opacity="0.5"/>';
+  }
+  s+='<text x="'+(Wd-pad)+'" y="'+(Ht-8)+'" text-anchor="end" font-size="13" font-style="italic" font-family="Newsreader,serif" fill="var(--muted)">X</text>';
+  s+='<text x="'+(pad-8)+'" y="'+(pad+4)+'" text-anchor="end" font-size="13" font-style="italic" font-family="Newsreader,serif" fill="var(--muted)">Y</text>';
+  return s+'</svg>';
+}
+function supportGridSVG(){
+  var Wd=300, Ht=230, cx=Wd/2, cy=Ht/2-6, u=62;
+  var pts=[[1,0],[0,1],[-1,0],[0,-1]];
+  var s='<svg viewBox="0 0 '+Wd+' '+Ht+'" role="img" aria-label="The four possible outcomes plotted on axes">';
+  s+='<line x1="'+(cx-u*1.7)+'" y1="'+cy+'" x2="'+(cx+u*1.7)+'" y2="'+cy+'" stroke="var(--line)" stroke-width="1.5"/>';
+  s+='<line x1="'+cx+'" y1="'+(cy-u*1.5)+'" x2="'+cx+'" y2="'+(cy+u*1.5)+'" stroke="var(--line)" stroke-width="1.5"/>';
+  for(var i=0;i<pts.length;i++){
+    var x=cx+pts[i][0]*u, y=cy-pts[i][1]*u;
+    s+='<circle cx="'+x+'" cy="'+y+'" r="8" fill="var(--ultra)"/>';
+    s+='<text x="'+x+'" y="'+(y-16)+'" text-anchor="middle" font-size="13" font-family="Newsreader,serif" fill="var(--muted)">('+pts[i][0]+',&#8202;'+pts[i][1]+')</text>';
+  }
+  s+='<text x="'+(cx+u*1.7)+'" y="'+(cy+18)+'" text-anchor="end" font-size="13" font-style="italic" font-family="Newsreader,serif" fill="var(--muted)">X</text>';
+  s+='<text x="'+(cx-10)+'" y="'+(cy-u*1.5+10)+'" text-anchor="end" font-size="13" font-style="italic" font-family="Newsreader,serif" fill="var(--muted)">Y</text>';
+  return s+'</svg>';
+}
+
+/* ============================ shell ============================ */
+var app=document.getElementById('app');
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+function chrome(){
+  document.getElementById('xp-pill').textContent=totalXP()+' XP';
+  var pct=Math.round(answeredCount()/totalQs()*100);
+  document.getElementById('bar-fill').style.width=pct+'%';
+}
+function toast(msg){
+  var t=document.createElement('div'); t.className='toast'; t.textContent=msg;
+  document.body.appendChild(t); setTimeout(function(){ t.remove(); },1900);
+}
+function go(html, scroll){
+  app.innerHTML=html; chrome();
+  if(scroll!==false) window.scrollTo(0,0);
+}
+
+/* ============================ home ============================ */
+function viewHome(){
+  var done=answeredCount(), tq=totalQs();
+  var startLabel = done===0 ? 'Start the tutorial' : (allComplete()? 'Review your results' : 'Continue where you left off');
+  var h='';
+  h+='<section class="hero">';
+  h+='<div>';
+  h+='<p class="kicker">Tutorial 1 &middot; probability revision</p>';
+  h+='<h1>Six exercises. Instant marking. No solutions sheet to peek at.</h1>';
+  h+='<p class="lede">Work through expectation, variance, covariance and correlation one step at a time. Every answer is checked as you go, with the reasoning explained before you move on.</p>';
+  h+='<div class="hero-cta"><button class="btn" id="start">'+startLabel+'</button>';
+  h+='<button class="btn ghost" id="sols">Worked solutions</button></div>';
+  h+='</div>';
+  h+='<div class="plot"><div class="plot-cap"><b>Correlation between '+m(X)+' and '+m(Y)+'</b><span class="val" id="rho-val">0.70</span></div>';
+  h+='<div id="cloud">'+cloudSVG(0.7)+'</div>';
+  h+='<input type="range" id="rho" min="-1" max="1" step="0.05" value="0.7" aria-label="Correlation">';
+  h+='<p class="rng-note">Exercise 5 is about what moves this number — and what leaves it alone.</p></div>';
+  h+='</section>';
+
+  h+='<div class="sect-head"><h2>Exercises</h2><span class="stars" style="color:var(--muted);font-size:14px;letter-spacing:0">'+done+' of '+tq+' questions answered</span></div>';
+  h+='<p class="sect-sub">Pick up anywhere — your progress is saved on this device.</p>';
+  for(var i=0;i<STAGES.length;i++){
+    var st=STAGES[i], s=stageStat(i), stars=stageStars(i);
+    var starHTML='';
+    for(var k=0;k<3;k++) starHTML += k<stars ? '&#9733;' : '<span class="off">&#9733;</span>';
+    h+='<button class="stage-row'+(s.complete?' done':'')+'" data-stage="'+i+'">';
+    h+='<span class="num">'+(i+1)+'</span>';
+    h+='<span><h3>'+st.title+'</h3><p>'+st.sub+' &middot; '+st.qs.length+' questions'+(s.done?' &middot; '+s.done+' answered':'')+'</p></span>';
+    h+='<span class="stars">'+starHTML+'</span></button>';
+  }
+  if(done>0){
+    h+='<div style="margin-top:26px"><button class="btn ghost small" id="report">See my performance report</button></div>';
+  }
+  go(h);
+
+  var rho=document.getElementById('rho');
+  rho.addEventListener('input',function(){
+    var v=parseFloat(rho.value);
+    document.getElementById('cloud').innerHTML=cloudSVG(v);
+    document.getElementById('rho-val').textContent=(v>=0?'':'')+v.toFixed(2);
+  });
+  document.getElementById('start').onclick=function(){
+    if(allComplete()) return viewReport();
+    for(var i=0;i<STAGES.length;i++){ var s=stageStat(i); if(!s.complete) return viewQ(i, s.done); }
+  };
+  document.getElementById('sols').onclick=viewSolutions;
+  var rep=document.getElementById('report'); if(rep) rep.onclick=viewReport;
+  var rows=app.querySelectorAll('.stage-row');
+  for(var r=0;r<rows.length;r++) rows[r].onclick=function(){ viewQ(parseInt(this.getAttribute('data-stage'),10),0); };
+}
+
+/* ============================ question view ============================ */
+var cur={si:0,qi:0,picked:null,placed:[],pool:[],checked:false,hinted:false,wrongOnce:false};
+
+function viewQ(si,qi){
+  if(qi>=STAGES[si].qs.length) return viewStageEnd(si);
+  if(!S.started){ S.started=Date.now(); save(); }
+  var st=STAGES[si], q=st.qs[qi], prev=S.res[qid(si,qi)];
+  cur={si:si,qi:qi,picked:null,placed:[],pool:[],checked:false,hinted:false,wrongOnce:false};
+
+  var h='';
+  h+='<div class="play-head"><h2>'+(si+1)+'. '+st.title+'</h2><div class="dots">';
+  for(var i=0;i<st.qs.length;i++){
+    var r=S.res[qid(si,i)], cls='dot';
+    if(i===qi) cls+=' now'; else if(r&&r.done) cls+= r.firstTry?' ok':(r.correct?' ok':' no');
+    h+='<span class="'+cls+'"></span>';
+  }
+  h+='</div></div>';
+  h+='<div class="card">';
+  if(qi===0 && st.brief){
+    h+='<div class="brief"><b>'+st.sub+'</b>'+st.brief+'</div>';
+    if(st.widget==='grid') h+='<div style="max-width:320px;margin:0 auto 22px">'+supportGridSVG()+'</div>';
+  }
+  h+='<p class="q-prompt">'+q.p+'</p>';
+  h+='<div id="answer"></div>';
+  h+='<div id="hint"></div>';
+  h+='<div class="actions" id="actions"></div>';
+  h+='<div id="fb"></div>';
+  h+='</div>';
+  h+='<div class="actions" style="margin-top:18px"><button class="btn ghost small" id="back">All exercises</button></div>';
+  go(h);
+  document.getElementById('back').onclick=viewHome;
+
+  renderAnswer(q);
+  renderActions(q);
+  if(prev && prev.done) revealAnswered(q, prev);
+}
+
+function renderAnswer(q){
+  var box=document.getElementById('answer'), h='';
+  if(q.widget==='noise'){
+    h+='<div class="plot" style="margin-bottom:22px"><div class="plot-cap"><b>Correlation</b><span class="val" id="nl-val">1.00</span></div>';
+    h+='<div id="nl-cloud">'+cloudSVG(1)+'</div>';
+    h+='<input type="range" id="nl" min="0" max="12" step="0.25" value="0" aria-label="Variance of u">';
+    h+='<p class="rng-note">'+m(VU)+' = <span id="nl-vu">0.00</span>, holding '+m(B+' = 1')+' and '+m(VX+' = 1')+'.</p></div>';
+  }
+  if(q.t==='mc'){
+    cur.order=shuffleIdx(q.opts.length, cur.si*211+cur.qi*13+5);
+    h+='<div class="opts">';
+    for(var i=0;i<q.opts.length;i++)
+      h+='<button class="opt" data-i="'+i+'"><span class="key">'+String.fromCharCode(65+i)+'</span><span>'+q.opts[cur.order[i]]+'</span></button>';
+    h+='</div>';
+  } else if(q.t==='num'){
+    h+='<div class="num-row"><input type="text" id="numin" inputmode="decimal" autocomplete="off" placeholder="your answer">';
+    h+='<span class="unit">'+(q.unit? 'in '+q.unit+' — ':'')+'decimals or fractions both accepted</span></div>';
+  } else if(q.t==='order'){
+    h+='<div class="proof-slots empty" id="slots"></div><div class="pool" id="pool"></div>';
+  }
+  box.innerHTML=h;
+
+  if(q.widget==='noise'){
+    var nl=document.getElementById('nl');
+    nl.addEventListener('input',function(){
+      var vu=parseFloat(nl.value), r=1/Math.sqrt(1+vu);
+      document.getElementById('nl-cloud').innerHTML=cloudSVG(r);
+      document.getElementById('nl-val').textContent=r.toFixed(2);
+      document.getElementById('nl-vu').textContent=vu.toFixed(2);
+    });
+  }
+  if(q.t==='mc'){
+    var opts=box.querySelectorAll('.opt');
+    for(var j=0;j<opts.length;j++) opts[j].onclick=function(){
+      if(cur.checked) return;
+      cur.picked=parseInt(this.getAttribute('data-i'),10);
+      var all=document.querySelectorAll('.opt');
+      for(var k=0;k<all.length;k++) all[k].classList.toggle('picked', k===cur.picked);
+      syncCheck();
+    };
+  }
+  if(q.t==='num'){
+    var inp=document.getElementById('numin');
+    inp.addEventListener('input', syncCheck);
+    inp.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); var b=document.getElementById('check'); if(b&&!b.disabled) b.click(); } });
+  }
+  if(q.t==='order'){
+    cur.pool=shuffleIdx(q.steps.length, cur.si*97+cur.qi*31+7);
+    drawOrder(q);
+  }
+}
+
+function shuffleIdx(n, seed){
+  var a=[], i; for(i=0;i<n;i++) a.push(i);
+  var rnd=mulberry(seed);
+  for(i=n-1;i>0;i--){ var j=Math.floor(rnd()*(i+1)), t=a[i]; a[i]=a[j]; a[j]=t; }
+  var identity=true; for(i=0;i<n;i++) if(a[i]!==i){ identity=false; break; }
+  if(identity){ var s=a[0]; a[0]=a[n-1]; a[n-1]=s; }
+  return a;
+}
+function drawOrder(q){
+  var slots=document.getElementById('slots'), pool=document.getElementById('pool');
+  slots.className='proof-slots'+(cur.placed.length?'':' empty');
+  var h='';
+  for(var i=0;i<cur.placed.length;i++)
+    h+='<button class="step" data-p="'+i+'"><span class="n">'+(i+1)+'</span><span>'+q.steps[cur.placed[i]]+'</span></button>';
+  slots.innerHTML=h;
+  var ph='';
+  for(var j=0;j<cur.pool.length;j++)
+    if(cur.placed.indexOf(cur.pool[j])===-1)
+      ph+='<button class="step" data-s="'+cur.pool[j]+'"><span class="n">+</span><span>'+q.steps[cur.pool[j]]+'</span></button>';
+  pool.innerHTML=ph;
+  var ps=pool.querySelectorAll('.step');
+  for(var k=0;k<ps.length;k++) ps[k].onclick=function(){
+    if(cur.checked) return;
+    cur.placed.push(parseInt(this.getAttribute('data-s'),10)); drawOrder(q); syncCheck();
+  };
+  var ss=slots.querySelectorAll('.step');
+  for(var n=0;n<ss.length;n++) ss[n].onclick=function(){
+    if(cur.checked) return;
+    cur.placed.splice(parseInt(this.getAttribute('data-p'),10),1); drawOrder(q); syncCheck();
+  };
+}
+
+function renderActions(q){
+  var a=document.getElementById('actions');
+  a.innerHTML='<button class="btn" id="check" disabled>Check answer</button>'+
+              '<button class="hint-btn" id="hintbtn">Show a hint (&minus;'+HINT_COST+' XP)</button>';
+  document.getElementById('check').onclick=function(){ check(q); };
+  document.getElementById('hintbtn').onclick=function(){
+    cur.hinted=true;
+    document.getElementById('hint').innerHTML='<div class="hint-box">'+q.hint+'</div>';
+    this.remove();
+  };
+  syncCheck();
+}
+function syncCheck(){
+  var b=document.getElementById('check'); if(!b) return;
+  var q=STAGES[cur.si].qs[cur.qi], ready=false;
+  if(q.t==='mc') ready = cur.picked!==null;
+  if(q.t==='num'){ var el=document.getElementById('numin'); ready = el && parseNum(el.value)!==null; }
+  if(q.t==='order') ready = cur.placed.length===q.steps.length;
+  b.disabled=!ready;
+}
+function parseNum(s){
+  if(s===undefined||s===null) return null;
+  s=String(s).trim().replace(/[£$,\s]/g,'');
+  if(!s) return null;
+  if(/^-?\d+(\.\d+)?\/-?\d+(\.\d+)?$/.test(s)){
+    var p=s.split('/'), d=parseFloat(p[1]);
+    if(!d) return null; return parseFloat(p[0])/d;
+  }
+  if(!/^-?\d*\.?\d+$/.test(s)) return null;
+  var v=parseFloat(s); return isNaN(v)?null:v;
+}
+
+function check(q){
+  var correct=false;
+  if(q.t==='mc'){
+    correct = cur.order[cur.picked]===q.a;
+    var opts=document.querySelectorAll('.opt');
+    for(var i=0;i<opts.length;i++){
+      opts[i].disabled=true; opts[i].classList.remove('picked');
+      if(cur.order[i]===q.a) opts[i].classList.add('right');
+      else if(i===cur.picked) opts[i].classList.add('wrong');
+    }
+  } else if(q.t==='num'){
+    var el=document.getElementById('numin'), v=parseNum(el.value);
+    correct = v!==null && Math.abs(v-q.a) <= Math.max(1e-9, Math.abs(q.a)*1e-9 + 1e-9);
+    el.disabled=true; el.classList.add(correct?'right':'wrong');
+  } else if(q.t==='order'){
+    correct=true;
+    var slots=document.querySelectorAll('#slots .step');
+    for(var j=0;j<cur.placed.length;j++){
+      var ok = cur.placed[j]===j;
+      if(!ok) correct=false;
+      slots[j].classList.add(ok?'right':'wrong');
+      slots[j].disabled=true;
+    }
+    var ps=document.querySelectorAll('#pool .step');
+    for(var k=0;k<ps.length;k++) ps[k].disabled=true;
+  }
+  cur.checked=true;
+
+  if(!correct && !cur.wrongOnce && q.t!=='mc'){
+    // one free retry for numeric and ordering questions
+    cur.wrongOnce=true; cur.checked=false;
+    var fb=document.getElementById('fb');
+    fb.innerHTML='<div class="fb no"><b>Not right yet.</b>Have another go — this attempt is still worth '+RETRY+' XP.</div>';
+    document.getElementById('actions').innerHTML='<button class="btn" id="again">Try again</button>'+
+      (cur.hinted?'':'<button class="hint-btn" id="hintbtn2">Show a hint (&minus;'+HINT_COST+' XP)</button>');
+    document.getElementById('again').onclick=function(){
+      cur.picked=null; cur.placed=[]; cur.checked=false;
+      document.getElementById('fb').innerHTML='';
+      renderAnswer(q); renderActions(q);
+      if(cur.hinted) document.getElementById('hint').innerHTML='<div class="hint-box">'+q.hint+'</div>';
+    };
+    var hb=document.getElementById('hintbtn2');
+    if(hb) hb.onclick=function(){
+      cur.hinted=true;
+      document.getElementById('hint').innerHTML='<div class="hint-box">'+q.hint+'</div>';
+      this.remove();
+    };
+    return;
+  }
+  award(q, correct);
+}
+
+function award(q, correct){
+  var firstTry = correct && !cur.wrongOnce;
+  var xp=0;
+  if(correct){
+    xp = firstTry?FIRST:RETRY;
+    if(cur.hinted) xp=Math.max(10, xp-HINT_COST);
+    S.streak++;
+    var bonus=Math.min(S.streak-1,STREAK_MAX)*STREAK_UNIT;
+    if(firstTry) xp+=bonus;
+  } else { S.streak=0; }
+  S.res[qid(cur.si,cur.qi)]={done:true, correct:correct, firstTry:firstTry, hinted:cur.hinted, xp:xp};
+  save(); chrome();
+
+  var fb=document.getElementById('fb');
+  var head = correct ? (firstTry ? (S.streak>=3? 'Correct — '+S.streak+' in a row.' : 'Correct.') : 'Correct on the second attempt.')
+                     : 'Not quite.';
+  fb.innerHTML='<div class="fb '+(correct?'ok':'no')+'"><span class="xp">'+(xp>0?'+'+xp+' XP':'')+'</span><b>'+head+'</b>'+q.why+'</div>';
+
+  var last = cur.qi===STAGES[cur.si].qs.length-1;
+  document.getElementById('actions').innerHTML='<button class="btn" id="next">'+(last?'Finish this exercise':'Next question')+'</button>';
+  document.getElementById('next').onclick=function(){
+    if(last) viewStageEnd(cur.si); else viewQ(cur.si, cur.qi+1);
+  };
+  document.getElementById('next').focus();
+}
+
+function revealAnswered(q, prev){
+  var fb=document.getElementById('fb');
+  fb.innerHTML='<div class="fb '+(prev.correct?'ok':'no')+'"><b>You have already answered this one'+(prev.correct?' correctly':'')+'.</b>'+q.why+'</div>';
+  var last = cur.qi===STAGES[cur.si].qs.length-1;
+  document.getElementById('actions').innerHTML=
+    '<button class="btn" id="next">'+(last?'Finish this exercise':'Next question')+'</button>'+
+    '<button class="btn ghost small" id="redo">Answer it again</button>';
+  document.getElementById('next').onclick=function(){ if(last) viewStageEnd(cur.si); else viewQ(cur.si,cur.qi+1); };
+  document.getElementById('redo').onclick=function(){
+    delete S.res[qid(cur.si,cur.qi)]; save(); viewQ(cur.si,cur.qi);
+  };
+  if(q.t==='mc'){
+    var opts=document.querySelectorAll('.opt');
+    for(var i=0;i<opts.length;i++){ opts[i].disabled=true; if(cur.order[i]===q.a) opts[i].classList.add('right'); }
+  }
+  if(q.t==='num'){ var el=document.getElementById('numin'); el.value=q.a; el.disabled=true; el.classList.add('right'); }
+  if(q.t==='order'){
+    cur.placed=q.steps.map(function(s,i){ return i; });
+    drawOrder(q);
+    var ss=document.querySelectorAll('#slots .step');
+    for(var j=0;j<ss.length;j++){ ss[j].classList.add('right'); ss[j].disabled=true; }
+  }
+  cur.checked=true;
+}
+
+/* ============================ stage end ============================ */
+function viewStageEnd(si){
+  var st=STAGES[si], s=stageStat(si), stars=stageStars(si);
+  var starHTML=''; for(var k=0;k<3;k++) starHTML += k<stars?'&#9733;':'<span class="off">&#9733;</span>';
+  var msg = s.first===s.n ? 'Every question right first time.'
+          : s.right===s.n ? 'All correct — a couple took two attempts.'
+          : s.right>=Math.ceil(s.n*0.6) ? 'Solid, with a few to revisit.'
+          : 'Worth another pass at this one before the tutorial.';
+  var h='<div class="card" style="margin-top:36px;text-align:center">';
+  h+='<p class="kicker">Exercise '+(si+1)+' complete</p>';
+  h+='<h2 style="font-size:28px;margin-bottom:8px">'+st.title+'</h2>';
+  h+='<div class="stars" style="font-size:30px;letter-spacing:6px;margin:10px 0 4px">'+starHTML+'</div>';
+  h+='<p class="lede" style="margin:8px auto 22px;max-width:40ch">'+msg+'</p>';
+  h+='<div class="grid-stats" style="text-align:left">';
+  h+='<div class="stat"><b>'+s.right+'/'+s.n+'</b><span>correct</span></div>';
+  h+='<div class="stat"><b>'+s.first+'/'+s.n+'</b><span>right first time</span></div>';
+  h+='<div class="stat"><b>'+s.xp+'</b><span>XP from this exercise</span></div>';
+  h+='</div>';
+  h+='<div class="actions" style="justify-content:center">';
+  if(si<STAGES.length-1) h+='<button class="btn" id="next">Start exercise '+(si+2)+'</button>';
+  else h+='<button class="btn" id="rep">See my full report</button>';
+  h+='<button class="btn ghost" id="redo">Redo this exercise</button>';
+  h+='<button class="btn ghost" id="home">All exercises</button>';
+  h+='</div></div>';
+  go(h);
+  var n=document.getElementById('next'); if(n) n.onclick=function(){ viewQ(si+1,0); };
+  var r=document.getElementById('rep'); if(r) r.onclick=viewReport;
+  document.getElementById('home').onclick=viewHome;
+  document.getElementById('redo').onclick=function(){
+    for(var i=0;i<st.qs.length;i++) delete S.res[qid(si,i)];
+    save(); viewQ(si,0);
+  };
+}
+
+/* ============================ report ============================ */
+function viewReport(){
+  var tq=totalQs(), done=answeredCount(), right=0, first=0, hints=0;
+  for(var k in S.res){ var r=S.res[k]; if(r.done){ if(r.correct) right++; if(r.firstTry) first++; if(r.hinted) hints++; } }
+  var pct = done? Math.round(right/done*100):0;
+  var firstPct = done? Math.round(first/done*100):0;
+  var mins = S.started? Math.max(1,Math.round((Date.now()-S.started)/60000)) : 0;
+
+  var weakest=null, weakScore=2;
+  for(var i=0;i<STAGES.length;i++){
+    var s=stageStat(i); if(!s.done) continue;
+    var sc=s.first/s.n;
+    if(sc<weakScore){ weakScore=sc; weakest=i; }
+  }
+
+  var h='<div style="margin-top:36px"></div>';
+  h+='<h2 style="font-size:30px;margin-bottom:6px">Your performance</h2>';
+  h+='<p class="sect-sub">'+(allComplete()?'All six exercises complete.':done+' of '+tq+' questions answered so far.')+'</p>';
+  h+='<div class="card">';
+  h+='<div class="grid-stats" style="margin-top:0">';
+  h+='<div class="stat"><b>'+totalXP()+'</b><span>total XP</span></div>';
+  h+='<div class="stat"><b>'+pct+'%</b><span>answered correctly</span></div>';
+  h+='<div class="stat"><b>'+firstPct+'%</b><span>right first time</span></div>';
+  h+='<div class="stat"><b>'+hints+'</b><span>hints used</span></div>';
+  h+='</div>';
+  h+='<h3 style="font-size:17px;margin:26px 0 6px">First-time accuracy by exercise</h3>';
+  for(var j=0;j<STAGES.length;j++){
+    var st=stageStat(j), p = st.done? Math.round(st.first/st.n*100):0;
+    h+='<div class="brk"><span class="t">'+(j+1)+'. '+STAGES[j].title+'</span>';
+    h+='<span class="meter"><div style="width:'+p+'%"></div></span><span class="pc">'+(st.done?p+'%':'—')+'</span></div>';
+  }
+  if(weakest!==null && weakScore<1){
+    h+='<div class="brief" style="margin:24px 0 0"><b>Where to look again</b>Exercise '+(weakest+1)+', '+STAGES[weakest].title.toLowerCase()+
+       ', is the one that cost you most attempts. The worked solution below walks through it.</div>';
+  }
+  h+='</div>';
+
+  var lines=[];
+  lines.push('ECON20004 Tutorial 1 — my results');
+  lines.push('Answered: '+done+'/'+tq+'   Correct: '+pct+'%   First time: '+firstPct+'%   XP: '+totalXP());
+  for(var q=0;q<STAGES.length;q++){
+    var ss=stageStat(q);
+    lines.push((q+1)+'. '+STAGES[q].title+' — '+(ss.done? ss.right+'/'+ss.n+' correct, '+ss.first+' first time' : 'not attempted'));
+  }
+  if(mins) lines.push('Time on task: about '+mins+' minute'+(mins===1?'':'s'));
+
+  h+='<div class="card" style="margin-top:18px">';
+  h+='<h3 style="font-size:17px;margin:0 0 6px">Send this to your tutor</h3>';
+  h+='<p class="sect-sub" style="margin-bottom:12px">Nothing leaves your device automatically. Copy this summary into an email or a form if your tutor asks for it.</p>';
+  h+='<textarea id="summary" readonly>'+esc(lines.join('\n'))+'</textarea>';
+  h+='<div class="actions" style="margin-top:12px"><button class="btn small" id="copy">Copy summary</button>';
+  h+='<button class="btn ghost small" id="sols2">Worked solutions</button>';
+  h+='<button class="btn ghost small" id="home2">All exercises</button></div></div>';
+  go(h);
+
+  document.getElementById('copy').onclick=function(){
+    var ta=document.getElementById('summary');
+    ta.select(); ta.setSelectionRange(0,99999);
+    var ok=false;
+    try{ ok=document.execCommand('copy'); }catch(e){}
+    if(navigator.clipboard && !ok){ navigator.clipboard.writeText(ta.value).then(function(){ toast('Summary copied'); },function(){}); }
+    else toast(ok?'Summary copied':'Select the text and copy it');
+  };
+  document.getElementById('sols2').onclick=viewSolutions;
+  document.getElementById('home2').onclick=viewHome;
+}
+
+/* ============================ solutions ============================ */
+function viewSolutions(){
+  var h='<div style="margin-top:36px"></div><h2 style="font-size:30px;margin-bottom:6px">Worked solutions</h2>';
+  h+='<p class="sect-sub">Open these after you have had a go. They print tidily if you want them on paper.</p>';
+  for(var i=0;i<STAGES.length;i++){
+    var st=STAGES[i];
+    h+='<details class="sol"><summary>'+(i+1)+'. '+st.title+'</summary><div class="body">';
+    h+='<p style="color:var(--ink)">'+st.brief+'</p>';
+    for(var j=0;j<st.qs.length;j++){
+      var q=st.qs[j];
+      h+='<p style="margin:16px 0 4px;color:var(--ink);font-weight:600">'+q.p+'</p>';
+      if(q.t==='order'){
+        h+='<div style="margin:0 0 6px">';
+        for(var k=0;k<q.steps.length;k++) h+='<div style="padding:2px 0;color:var(--ink)">'+q.steps[k]+'</div>';
+        h+='</div>';
+      } else if(q.t==='mc'){
+        h+='<p style="margin:0 0 6px;color:var(--ink)">'+q.opts[q.a]+'</p>';
+      } else {
+        h+='<p style="margin:0 0 6px;color:var(--ink)">'+m((q.unit||'')+q.a.toLocaleString('en-GB'))+'</p>';
+      }
+      h+='<p style="margin:0">'+q.why+'</p>';
+    }
+    h+='</div></details>';
+  }
+  h+='<div class="actions" style="margin-top:22px"><button class="btn ghost" id="home3">All exercises</button>'+
+     '<button class="btn ghost" id="print">Print these</button></div>';
+  go(h);
+  document.getElementById('home3').onclick=viewHome;
+  document.getElementById('print').onclick=function(){
+    var ds=document.querySelectorAll('details.sol');
+    for(var i=0;i<ds.length;i++) ds[i].open=true;
+    window.print();
+  };
+}
+
+/* ============================ boot ============================ */
+document.getElementById('home-link').onclick=viewHome;
+document.getElementById('theme-btn').onclick=function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  var dark = cur ? cur==='dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+  document.documentElement.setAttribute('data-theme', dark?'light':'dark');
+  try{ localStorage.setItem(KEY+'-theme', dark?'light':'dark'); }catch(e){}
+};
+document.getElementById('reset-btn').onclick=function(){
+  if(!confirm('Clear all your answers and start again?')) return;
+  S.res={}; S.streak=0; S.started=null; save(); viewHome(); toast('Progress cleared');
+};
+try{ var th=localStorage.getItem(KEY+'-theme'); if(th) document.documentElement.setAttribute('data-theme',th); }catch(e){}
+load();
+viewHome();
+})();
+</script>
+</body>
+</html>
